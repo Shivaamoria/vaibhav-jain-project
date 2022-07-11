@@ -67,7 +67,7 @@ public class MenuService {
 		if(menu.equals(null)){
 			throw new ItemNotFoundException("Food Items Doesn't Exist");
 		}
-			else{
+			else {
 			return menu;
 		}
 
