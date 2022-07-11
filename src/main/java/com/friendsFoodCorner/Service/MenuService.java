@@ -33,9 +33,14 @@ public class MenuService {
 		return items;
 	}
 
-	public void save(Menu menu) {
-
+	public String save(Menu menu) {
 		menurepo.save(menu);
+		if (menu.equals(null)){
+			throw new ItemNotFoundException("values can not be null ");
+	}
+	else {
+			return "added successfully";
+		}
 	}
 
 	public void deleteItemById(int id) {
@@ -44,26 +49,43 @@ public class MenuService {
 		menurepo.deleteById(id);
 	}
 
-	public List<Menu> findAllItem(String category) {
+	public List<Menu> findAllItem(String category) throws Exception {
 		List<Menu> items = new ArrayList<Menu>();
 		menurepo.findByCategory(category).forEach(item -> items.add(item));
-		return items;
+		System.out.println(items);
+		if (items.isEmpty()){
+			throw new Exception("item not found");
+		}else{
+			return items;
+		}
+
 	}
 
-	public Menu findAllItems(String item) {		
+	public Menu findAllItems(String item)  {
 		Menu menu=new Menu();		
-		menu=menurepo.findByItem(item);		
-		return menu;
-		
+		menu=menurepo.findByItem(item);
+		if(menu.equals(null)){
+			throw new ItemNotFoundException("Food Items Doesn't Exist");
+		}
+			else{
+			return menu;
+		}
+
 	}
 
-	public List<Cart> getAllIt() {
+		
+
+
+	public List<Cart> getAllIt() throws Exception {
 		List<Cart> citems = new ArrayList<Cart>();
 		cartrepo.findAll().forEach(itm -> citems.add(itm));
+		if(citems.isEmpty())
+			throw new Exception("Cart Is Empty");
+
 		return citems;
 	}
 
-	public List<Cart> findAllIt(String name) {
+	public List<Cart> findAllIt(String name) throws Exception {
 		double Tamt = 0;
 		List<Cart> names = new ArrayList<Cart>();		
 		cartrepo.findByName(name).forEach(citm -> names.add(citm));
@@ -73,6 +95,9 @@ public class MenuService {
 			double Amount=it.next().total;
 			Tamt+=Amount;	
 		}
+		if(names.isEmpty())
+			throw new Exception("Cart with this Name is not Exist");
+
 		return names;
 	}
 
@@ -116,8 +141,5 @@ public void deleteItem(int id) {
 		throw new ItemNotFoundException("Item Not Found : " +id);
 		cartrepo.deleteById(id);
 }
-
-
-
 
 }

@@ -32,28 +32,19 @@ List<Menu> items= menuService.getAllItems();
 
 	@GetMapping("/men/{category}")
 	public List<Menu> getAllItem_names(@PathVariable String category) throws Exception {
-		List<Menu> itemByCat= menuService.findAllItem(category);
-		if(itemByCat.isEmpty()){
-			throw new Exception("Category Doesn't Exist");
-		}else{
-			return itemByCat;
-		}
+	return menuService.findAllItem(category);
+
 	}
 
 	@GetMapping("/mnu/{item}")
 	public Menu getAllItem_name(@PathVariable String item) throws Exception {
-		Menu itemByName = menuService.findAllItems(item);
-		if(itemByName==null)
-			throw new Exception("Food Items Doesn't Exist");
-		return itemByName;
+		return menuService.findAllItems(item);
 	}
 
 	@GetMapping("/menus/{id}")
 	public Menu getItem(@PathVariable int id) throws Exception {
-		Menu itemById= menuService.getItemById(id);
-		if(itemById==null)
-			throw new Exception("Food Items Doesn't Exist With This Id" + id);
-		return itemById;
+		return menuService.getItemById(id);
+
 	}
 	@DeleteMapping("/menu/{id}")
 	public String deleteItem(@PathVariable("id") int id) {
@@ -63,28 +54,22 @@ List<Menu> items= menuService.getAllItems();
 		
 
 	@PostMapping("/addmenu")
-	public String addMenu(@RequestBody Menu menu) {
+	public void addMenu(@RequestBody Menu menu) {
 			menuService.save(menu);
-			if (menu == null)
-				return "values cannot be null";
-			return "added successfully";
+
 	}
 //	========= Cart=============
 
 	@GetMapping("/cart")
 	public List<Cart> getAllIt() throws Exception {
-		List<Cart> carts= menuService.getAllIt();
-		if(carts.isEmpty())
-			throw new Exception("Cart Is Empty");
-		return carts;
+		return menuService.getAllIt();
+
 	}
 
 	@GetMapping("/cart/{name}")
 	public List<Cart> findAll(@PathVariable("name") String name) throws Exception {
-		List<Cart> cartByName= menuService.findAllIt(name);
-		if(cartByName.isEmpty())
-			throw new Exception("Cart with this Name is not Exist");
-		return cartByName;
+		return menuService.findAllIt(name);
+
 		}
 
 
